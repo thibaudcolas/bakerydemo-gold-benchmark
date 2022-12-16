@@ -20,4 +20,5 @@ __pycache__
 .vagrant/
 /.vagrant/
 /Vagrantfile.local
+collect_static
 !.gitignore

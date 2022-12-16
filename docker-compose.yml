@@ -17,14 +17,18 @@ services:
       - '6379'
   app:
     environment:
-      DJANGO_SECRET_KEY: changeme
+      SECRET_KEY: changeme
       DATABASE_URL: postgres://app_user:changeme@db/app_db
-      CACHE_URL: redis://redis
+      REDIS_URL: redis://redis
+      DJANGO_SETTINGS_MODULE: bakerydemo.settings.production
+      WAGTAILADMIN_BASE_URL: http://localhost:8000/admin/
+      SECURE_HSTS_SECONDS: 0
+      SECURE_SSL_REDIRECT: false
     build:
       context: .
       dockerfile: ./Dockerfile
     volumes:
-      - media-root:/code/bakerydemo/media
+      - ./bakerydemo:/app/bakerydemo
     links:
       - db:db
       - redis:redis
@@ -33,5 +37,9 @@ services:
     depends_on:
       - db
       - redis
-volumes:
-  media-root:
+  static_app:
+    image: nginx
+    volumes:
+      - ./static-bakerydemo:/usr/share/nginx/html
+    ports:
+      - '8001:80'

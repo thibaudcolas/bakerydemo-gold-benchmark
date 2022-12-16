@@ -1,4 +1,5 @@
 import debug_toolbar
+from django.apps import apps
 from django.conf import settings
 from django.contrib import admin
 from django.urls import include, path
@@ -42,6 +43,14 @@ if settings.DEBUG:
     urlpatterns += [
         path("test404/", TemplateView.as_view(template_name="404.html")),
         path("test500/", TemplateView.as_view(template_name="500.html")),
+    ]
+elif not apps.is_installed("storages"):
+    from django.views.static import serve
+    from django.urls import re_path
+    urlpatterns += [
+        re_path(r'^media/(?P<path>.*)$', serve, {
+            'document_root': settings.MEDIA_ROOT,
+        }),
     ]
 
 urlpatterns += [

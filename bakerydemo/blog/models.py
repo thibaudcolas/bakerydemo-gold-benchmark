@@ -112,7 +112,7 @@ class BlogPage(Page):
         for tag in tags:
             tag.url = "/" + "/".join(
                 s.strip("/") for s in [self.get_parent().url, "tags", tag.slug]
-            )
+            ) + "/"
         return tags
 
     # Specifies parent to BlogPage as being BlogIndexPages
