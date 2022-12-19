@@ -82,11 +82,11 @@ node homepage-landing.js
 See [Playwright – Migrating from Puppeteer](https://playwright.dev/docs/puppeteer) for differences between the two APIs. Those are the same scenarios, but written with Playwright for compatibility with [Greenframe](https://github.com/marmelab/greenframe-cli). First install Greenframe, then use the following test commands:
 
 ```bash
-greenframe analyze http://localhost:8000/ homepage-landing.js --containers="bakerydemo-app-1" --databaseContainers="bakerydemo-db-1,bakerydemo-redis-1"
-greenframe analyze http://localhost:8000/ search.js --containers="bakerydemo-app-1" --databaseContainers="bakerydemo-db-1,bakerydemo-redis-1"
-greenframe analyze http://localhost:8000/ blog-filtering.js  --containers="bakerydemo-app-1" --databaseContainers="bakerydemo-db-1,bakerydemo-redis-1"
-greenframe analyze http://localhost:8000/ contact-us.js --containers="bakerydemo-app-1" --databaseContainers="bakerydemo-db-1,bakerydemo-redis-1"
-greenframe analyze http://localhost:8000/ admin.js --containers="bakerydemo-app-1" --databaseContainers="bakerydemo-db-1,bakerydemo-redis-1"0.
+greenframe analyze http://localhost:8000/ homepage-landing.js --containers="bakerydemo-gold-benchmark-app-1" --databaseContainers="bakerydemo-gold-benchmark-db-1,bakerydemo-gold-benchmark-redis-1"
+greenframe analyze http://localhost:8000/ search.js --containers="bakerydemo-gold-benchmark-app-1" --databaseContainers="bakerydemo-gold-benchmark-db-1,bakerydemo-gold-benchmark-redis-1"
+greenframe analyze http://localhost:8000/ blog-filtering.js  --containers="bakerydemo-gold-benchmark-app-1" --databaseContainers="bakerydemo-gold-benchmark-db-1,bakerydemo-gold-benchmark-redis-1"
+greenframe analyze http://localhost:8000/ contact-us.js --containers="bakerydemo-gold-benchmark-app-1" --databaseContainers="bakerydemo-gold-benchmark-db-1,bakerydemo-gold-benchmark-redis-1"
+greenframe analyze http://localhost:8000/ admin.js --containers="bakerydemo-gold-benchmark-app-1" --databaseContainers="bakerydemo-gold-benchmark-db-1,bakerydemo-gold-benchmark-redis-1"0.
 ```
 
 Or run all scenarios at once, based on the configuration in `.greenframe.yml`:

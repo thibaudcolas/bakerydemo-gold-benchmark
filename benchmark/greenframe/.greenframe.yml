@@ -16,7 +16,7 @@ distant: false
 useAdblock: false
 ignoreHTTPSErrors: true
 containers:
-  - "bakerydemo-app-1"
+  - "bakerydemo-gold-benchmark-app-1"
 databaseContainers:
-  - "bakerydemo-db-1"
-  - "bakerydemo-redis-1"
+  - "bakerydemo-gold-benchmark-db-1"
+  - "bakerydemo-gold-benchmark-redis-1"
