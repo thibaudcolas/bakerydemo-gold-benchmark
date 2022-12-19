@@ -30,8 +30,8 @@ With the overall goal of making it simpler to get the project running locally wi
 Requirement: Docker.
 
 ```bash
-git clone git@github.com:thibaudcolas/gold-bakerydemo.git
-cd gold-bakerydemo
+# Download a copy of https://github.com/thibaudcolas/bakerydemo-gold-benchmark.
+cd bakerydemo-gold-benchmark
 docker compose build app
 docker compose up app
 # The site is up and running but still needs its database initialised.
