@@ -1,13 +1,18 @@
 import puppeteer from 'puppeteer';
+import microtime from 'microtime';
 
 (async () => {
-    const browser = await puppeteer.launch();
+    const browser = await puppeteer.launch({
+      headless: true,
+      executablePath: "/usr/bin/chromium-browser",
+      args: ['--no-sandbox', '--disable-setuid-sandbox'],
+    });
     const page = await browser.newPage();
     page.setDefaultTimeout(5000);
     await page.setViewport({"width":1280,"height":1600});
 
-    await page.goto("http://localhost:8000/contact-us/", { waitUntil: "networkidle0" });
-    console.log(await page.title());
+    await page.goto("http://app:8005/contact-us/", { waitUntil: "networkidle0" });
+    console.log(microtime.now(), await page.title());
 
     await page.waitForTimeout(3000);
     await page.evaluate(() => document.querySelector('footer').scrollIntoView());
@@ -32,9 +37,9 @@ import puppeteer from 'puppeteer';
     await page.evaluate(() => document.querySelector('footer').scrollIntoView());
     await page.waitForNetworkIdle();
 
-    console.log(await page.title());
+    console.log(microtime.now(), await page.title());
     const intro = await page.$('.index-header__body-introduction');
-    console.log(await intro.evaluate((node) => node.innerText));
+    console.log(microtime.now(), (await intro.evaluate((node) => node.innerText)).replaceAll("\n", "--"));
 
     await page.waitForTimeout(3000);
     await page.evaluate(() => document.querySelector('footer').scrollIntoView());

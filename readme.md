@@ -4,7 +4,7 @@ Reference Wagtail site implementation for energy usage benchmarking.
 
 ## Project setup
 
-This project is based upon Wagtail’s official [bakerydemo](https://github.com/wagtail/bakerydemo), with tweaks to make it more suitable for local [energy consumption benchmarking](https://github.com/wagtail/wagtail/discussions/8843). 
+This project is based upon Wagtail’s official [bakerydemo](https://github.com/wagtail/bakerydemo), with tweaks to make it more suitable for local [energy consumption benchmarking](https://github.com/wagtail/wagtail/discussions/8843).
 
 ### Differences with vanilla bakerydemo
 
@@ -44,10 +44,10 @@ The site is now up and running with its demo content, but still needs cache warm
 Here is a sample `wget` command to warm up the cache:
 
 ```bash
-wget --recursive --spider --no-directories http://localhost:8000/ -o warmup.log
+wget --recursive --spider --no-directories http://localhost:8005/ -o warmup.log
 ```
 
-From there, the site can be accessed at <http://localhost:8000/>.
+From there, the site can be accessed at <http://localhost:8005/>.
 
 ## Benchmark scenarios
 
@@ -82,11 +82,11 @@ node homepage-landing.js
 See [Playwright – Migrating from Puppeteer](https://playwright.dev/docs/puppeteer) for differences between the two APIs. Those are the same scenarios, but written with Playwright for compatibility with [Greenframe](https://github.com/marmelab/greenframe-cli). First install Greenframe, then use the following test commands:
 
 ```bash
-greenframe analyze http://localhost:8000/ homepage-landing.js --containers="bakerydemo-gold-benchmark-app-1" --databaseContainers="bakerydemo-gold-benchmark-db-1,bakerydemo-gold-benchmark-redis-1"
-greenframe analyze http://localhost:8000/ search.js --containers="bakerydemo-gold-benchmark-app-1" --databaseContainers="bakerydemo-gold-benchmark-db-1,bakerydemo-gold-benchmark-redis-1"
-greenframe analyze http://localhost:8000/ blog-filtering.js  --containers="bakerydemo-gold-benchmark-app-1" --databaseContainers="bakerydemo-gold-benchmark-db-1,bakerydemo-gold-benchmark-redis-1"
-greenframe analyze http://localhost:8000/ contact-us.js --containers="bakerydemo-gold-benchmark-app-1" --databaseContainers="bakerydemo-gold-benchmark-db-1,bakerydemo-gold-benchmark-redis-1"
-greenframe analyze http://localhost:8000/ admin.js --containers="bakerydemo-gold-benchmark-app-1" --databaseContainers="bakerydemo-gold-benchmark-db-1,bakerydemo-gold-benchmark-redis-1"0.
+greenframe analyze http://localhost:8005/ homepage-landing.js --containers="bakerydemo-gold-benchmark-app-1" --databaseContainers="bakerydemo-gold-benchmark-db-1,bakerydemo-gold-benchmark-redis-1"
+greenframe analyze http://localhost:8005/ search.js --containers="bakerydemo-gold-benchmark-app-1" --databaseContainers="bakerydemo-gold-benchmark-db-1,bakerydemo-gold-benchmark-redis-1"
+greenframe analyze http://localhost:8005/ blog-filtering.js  --containers="bakerydemo-gold-benchmark-app-1" --databaseContainers="bakerydemo-gold-benchmark-db-1,bakerydemo-gold-benchmark-redis-1"
+greenframe analyze http://localhost:8005/ contact-us.js --containers="bakerydemo-gold-benchmark-app-1" --databaseContainers="bakerydemo-gold-benchmark-db-1,bakerydemo-gold-benchmark-redis-1"
+greenframe analyze http://localhost:8005/ admin.js --containers="bakerydemo-gold-benchmark-app-1" --databaseContainers="bakerydemo-gold-benchmark-db-1,bakerydemo-gold-benchmark-redis-1"0.
 ```
 
 Or run all scenarios at once, based on the configuration in `.greenframe.yml`:
@@ -120,7 +120,7 @@ The estimated footprint is 0.155 g eq. co2 ± 8.8% (0.352 Wh).
 It’s interesting to compare the performance of Django and Wagtail to that of pre-generated HTML files. First, generate the site:
 
 ```bash
-wget --mirror http://localhost:8000/
+wget --mirror http://localhost:8005/
 mv localhost:8000 static-bakerydemo
 mv static-bakerydemo/static/wagtailfontawesome/fonts/fontawesome-webfont.woff2\?v=4.7.0 static-bakerydemo/static/wagtailfontawesome/fonts/fontawesome-webfont.woff2
 mv bakerydemo/static/img/bread-favicon.ico static-bakerydemo/favicon.ico
@@ -140,7 +140,7 @@ The Greenframe test suite can run over this site as well with:
 greenframe analyze --configFile .greenframe.static.yml
 ```
 
-Sample results: 
+Sample results:
 
 ```txt
 […]

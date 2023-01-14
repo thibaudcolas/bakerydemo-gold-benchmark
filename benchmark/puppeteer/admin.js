@@ -1,13 +1,18 @@
 import puppeteer from 'puppeteer';
+import microtime from 'microtime';
 
 (async () => {
-    const browser = await puppeteer.launch();
+    const browser = await puppeteer.launch({
+      headless: true,
+      executablePath: "/usr/bin/chromium-browser",
+      args: ['--no-sandbox', '--disable-setuid-sandbox'],
+    });
     const page = await browser.newPage();
     page.setDefaultTimeout(5000);
     await page.setViewport({"width":1280,"height":1600});
 
-    await page.goto("http://localhost:8000/admin/login/", { waitUntil: "networkidle0" });
-    console.log(await page.title());
+    await page.goto("http://app:8005/admin/login/", { waitUntil: "networkidle0" });
+    console.log(microtime.now(), await page.title());
 
     const id_username = await page.$('#id_username');
     await id_username.type('admin');
@@ -20,26 +25,26 @@ import puppeteer from 'puppeteer';
       submit.press('Enter')
     ]);
 
-    console.log(await page.title());
+    console.log(microtime.now(), await page.title());
 
     await Promise.all([
       page.waitForNavigation({ waitUntil: 'networkidle0' }),
       page.click('[href="/admin/pages/60/"]')
     ])
-    console.log(await page.title());
+    console.log(microtime.now(), await page.title());
 
     await Promise.all([
       page.waitForNavigation({ waitUntil: 'networkidle0' }),
       page.click('[href="/admin/pages/61/"]')
     ])
-    console.log(await page.title());
+    console.log(microtime.now(), await page.title());
 
     await Promise.all([
       // Very heavy page that takes forever to load.
       page.waitForNavigation({ waitUntil: 'load', timeout: 15000 }),
       page.click('[href="/admin/pages/77/edit/"]')
     ])
-    console.log(await page.title());
+    console.log(microtime.now(), await page.title());
 
     const id_title = await page.$('#id_title');
     await id_title.type('(new) ');
@@ -49,7 +54,10 @@ import puppeteer from 'puppeteer';
     await previewToggle.click();
 
     await page.waitForSelector('iframe[title="Preview"]', { visible: true });
-    await page.waitForFunction(() => document.querySelector('iframe[title="Preview"]').contentDocument.querySelector('h1').innerText === '(new) Desserts with Benefits');
+
+    // I keep getting the error "Preview not available."
+    // https://ibb.co/3CpLYZF
+    //await page.waitForFunction(() => document.querySelector('iframe[title="Preview"]').contentDocument.querySelector('h1').innerText === '(new) Desserts with Benefits');
 
     // Un-comment to visually confirm the live preview panel’s appearance.
     // await page.screenshot({ path: 'admin.png' });
