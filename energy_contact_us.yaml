@@ -56,11 +56,7 @@ services:
   green-coding-puppeteer-container:
     image: greencoding/puppeteer-chrome
     setup-commands:
-      - cp /tmp/repo/benchmark/puppeteer/admin.js /var/www/admin.js
-      - cp /tmp/repo/benchmark/puppeteer/blog-filtering.js /var/www/blog-filtering.js
       - cp /tmp/repo/benchmark/puppeteer/contact-us.js /var/www/contact-us.js
-      - cp /tmp/repo/benchmark/puppeteer/homepage-landing.js /var/www/homepage-landing.js
-      - cp /tmp/repo/benchmark/puppeteer/search.js /var/www/search.js
       - cp /tmp/repo/benchmark/puppeteer/package.json /var/www/package.json
 
     networks:
@@ -79,7 +75,7 @@ flow:
     container: green-coding-puppeteer-container
     commands:
       - type: console
-        command:  node /var/www/blog-filtering.js
+        command:  node /var/www/contact-us.js
         note: Starting admin Flow
         read-notes-stdout: false
 
