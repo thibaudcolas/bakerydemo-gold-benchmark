@@ -155,22 +155,32 @@ The estimated footprint is 0.038 g eq. co2 ± 15.3% (0.085 Wh).
 
 These badges show the cost of running certain scenarios in this repository:
 
-- All Routes
+#### All Routes
 <a href="https://metrics.green-coding.berlin/stats.html?id=37e0ca9c-b38e-4833-8316-59802d8ef1da"><img src="https://api.green-coding.berlin/v1/badge/single/37e0ca9c-b38e-4833-8316-59802d8ef1da?metric=ml-estimated"></a>
+
 <a href="https://metrics.green-coding.berlin/stats.html?id=37e0ca9c-b38e-4833-8316-59802d8ef1da"><img src="https://api.green-coding.berlin/v1/badge/single/37e0ca9c-b38e-4833-8316-59802d8ef1da?metric=RAPL"></a>
+
 <a href="https://metrics.green-coding.berlin/stats.html?id=37e0ca9c-b38e-4833-8316-59802d8ef1da"><img src="https://api.green-coding.berlin/v1/badge/single/37e0ca9c-b38e-4833-8316-59802d8ef1da?metric=DC"></a>
 
-- Migrations
+
+#### Migrations
 <a href="https://metrics.green-coding.berlin/stats.html?id=dfb58eb7-7100-4ec6-80ee-7653e1329190"><img src="https://api.green-coding.berlin/v1/badge/single/dfb58eb7-7100-4ec6-80ee-7653e1329190?metric=ml-estimated"></a>
+
 <a href="https://metrics.green-coding.berlin/stats.html?id=dfb58eb7-7100-4ec6-80ee-7653e1329190"><img src="https://api.green-coding.berlin/v1/badge/single/dfb58eb7-7100-4ec6-80ee-7653e1329190?metric=RAPL"></a>
+
 <a href="https://metrics.green-coding.berlin/stats.html?id=dfb58eb7-7100-4ec6-80ee-7653e1329190"><img src="https://api.green-coding.berlin/v1/badge/single/dfb58eb7-7100-4ec6-80ee-7653e1329190?metric=DC"></a>
 
-- Cache Warmups
+#### Cache Warmups
 <a href="https://metrics.green-coding.berlin/stats.html?id=2821c396-98f0-4210-8aad-a9fc5a37f01e"><img src="https://api.green-coding.berlin/v1/badge/single/2821c396-98f0-4210-8aad-a9fc5a37f01e?metric=ml-estimated"></a>
+
 <a href="https://metrics.green-coding.berlin/stats.html?id=2821c396-98f0-4210-8aad-a9fc5a37f01e"><img src="https://api.green-coding.berlin/v1/badge/single/2821c396-98f0-4210-8aad-a9fc5a37f01e?metric=RAPL"></a>
+
 <a href="https://metrics.green-coding.berlin/stats.html?id=2821c396-98f0-4210-8aad-a9fc5a37f01e"><img src="https://api.green-coding.berlin/v1/badge/single/2821c396-98f0-4210-8aad-a9fc5a37f01e?metric=DC"></a>
 
-- Admin route only
+#### Admin route only
 <a href="https://metrics.green-coding.berlin/stats.html?id=ac6b2e5e-7b02-4002-a864-2a5b9e5bc3de"><img src="https://api.green-coding.berlin/v1/badge/single/ac6b2e5e-7b02-4002-a864-2a5b9e5bc3de?metric=ml-estimated"></a>
+
 <a href="https://metrics.green-coding.berlin/stats.html?id=ac6b2e5e-7b02-4002-a864-2a5b9e5bc3de"><img src="https://api.green-coding.berlin/v1/badge/single/ac6b2e5e-7b02-4002-a864-2a5b9e5bc3de?metric=RAPL"></a>
+
 <a href="https://metrics.green-coding.berlin/stats.html?id=ac6b2e5e-7b02-4002-a864-2a5b9e5bc3de"><img src="https://api.green-coding.berlin/v1/badge/single/ac6b2e5e-7b02-4002-a864-2a5b9e5bc3de?metric=DC"></a>
+
