@@ -11,7 +11,7 @@ import microtime from 'microtime';
     page.setDefaultTimeout(5000);
     await page.setViewport({"width":1280,"height":1600});
 
-    await page.goto("http://app:8005/admin/login/", { waitUntil: "networkidle0" });
+    await page.goto(process.env.USAGE_SCENARIO_DOMAIN+"/admin/login/", { waitUntil: "networkidle0" });
     console.log(microtime.now(), await page.title());
 
     const id_username = await page.$('#id_username');

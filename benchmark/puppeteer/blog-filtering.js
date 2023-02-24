@@ -11,7 +11,7 @@ import microtime from 'microtime';
     page.setDefaultTimeout(5000);
     await page.setViewport({"width":1280,"height":800});
 
-    await page.goto("http://app:8005/blog/", { waitUntil: "networkidle0" });
+    await page.goto(process.env.USAGE_SCENARIO_DOMAIN+"/blog/", { waitUntil: "networkidle0" });
     console.log(microtime.now(), await page.title());
 
     await page.waitForTimeout(3000);

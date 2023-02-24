@@ -1,8 +1,7 @@
 ---
-name: Bakerydemo GOLD benchmark
-author: Didi Hoffmann <didi@green-coding.org>
+name: Bakerydemo GOLD benchmark Static
+author: Danilo Ješić <danilo@green-coding.berlin>
 version: 1
-architecture: linux
 
 services:
   db:
@@ -18,7 +17,7 @@ services:
       - bakery-bench-green-coding-network
     # we need the DB fully booted. Therefore we wait here a little
     setup-commands:
-      - sleep 10
+      - sleep 1
 
   redis:
     restart: always
@@ -64,8 +63,9 @@ services:
     setup-commands:
       - apt update
       - apt install wget
-      - sh -c 'wget --mirror http://app:8005/ -P /usr/share/nginx/html' || true
-      - ls -l /usr/share/nginx/html
+      - wget --mirror http://app:8005/ -P /tmp || true
+      - cp -R /tmp/app:8005/* /usr/share/nginx/html/
+
 
   green-coding-puppeteer-container:
     image: greencoding/puppeteer-chrome
@@ -81,29 +81,41 @@ services:
       - bakery-bench-green-coding-network
 
 flow:
-  - name: Check dynamic Website
+  - name: Check admin page
     container: green-coding-puppeteer-container
     commands:
       - type: console
-        command:  node /var/www/admin.js
+        command: USAGE_SCENARIO_DOMAIN=static_app:80 node /var/www/admin.js
         note: Starting admin Flow
-        read-notes-stdout: true
+        read-notes-stdout: false
+  - name: Check blog-filtering
+    container: green-coding-puppeteer-container
+    commands:
       - type: console
-        command:  node /var/www/blog-filtering.js
+        command: USAGE_SCENARIO_DOMAIN=static_app:80 node /var/www/blog-filtering.js
         note: Starting admin Flow
-        read-notes-stdout: true
+        read-notes-stdout: false
+  - name: Check contact-us
+    container: green-coding-puppeteer-container
+    commands:
       - type: console
-        command:  node /var/www/contact-us.js
+        command: USAGE_SCENARIO_DOMAIN=static_app:80 node /var/www/contact-us.js
         note: Starting admin Flow
-        read-notes-stdout: true
+        read-notes-stdout: false
+  - name: Check homepage landing
+    container: green-coding-puppeteer-container
+    commands:
       - type: console
-        command:  node /var/www/homepage-landing.js
+        command: USAGE_SCENARIO_DOMAIN=static_app:80 node /var/www/homepage-landing.js
         note: Starting admin Flow
-        read-notes-stdout: true
+        read-notes-stdout: false
+  - name: Check search
+    container: green-coding-puppeteer-container
+    commands:
       - type: console
-        command:  node /var/www/search.js
+        command: USAGE_SCENARIO_DOMAIN=static_app:80 node /var/www/search.js
         note: Starting admin Flow
-        read-notes-stdout: true
+        read-notes-stdout: false
 
 networks:
   bakery-bench-green-coding-network:
