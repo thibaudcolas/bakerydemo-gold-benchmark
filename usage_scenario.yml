@@ -43,6 +43,8 @@ services:
       - redis:redis
     ports:
       - '8005:8005'
+    expose:
+      - '8005'
     depends_on:
       - db
       - redis
@@ -52,6 +54,18 @@ services:
       - ./manage.py migrate
       - ./manage.py load_initial_data
       - wget --recursive --spider --no-directories http://app:8005/ -o warmup.log
+
+  static_app:
+    image: nginx
+    networks:
+      - bakery-bench-green-coding-network
+    ports:
+      - '8001:80'
+    setup-commands:
+      - apt update
+      - apt install wget
+      - sh -c 'wget --mirror http://app:8005/ -P /usr/share/nginx/html' || true
+      - ls -l /usr/share/nginx/html
 
   green-coding-puppeteer-container:
     image: greencoding/puppeteer-chrome

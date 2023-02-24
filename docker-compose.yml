@@ -32,6 +32,14 @@ services:
       - redis:redis
     ports:
       - '8005:8005'
+    expose:
+      - '8005'
     depends_on:
       - db
       - redis
+  static_app:
+    image: nginx
+    volumes:
+      - ./static-bakerydemo:/usr/share/nginx/html
+    ports:
+      - '8001:80'
