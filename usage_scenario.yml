@@ -3,6 +3,7 @@ name: Bakerydemo GOLD benchmark
 author: Didi Hoffmann <didi@green-coding.org>
 version: 1
 architecture: linux
+description: Testing all routes of the exemplary Bakery demo Gold Benchmark
 
 services:
   db:
