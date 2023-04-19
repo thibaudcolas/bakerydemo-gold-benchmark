@@ -37,6 +37,7 @@ services:
     depends_on:
       - db
       - redis
+
   static_app:
     image: nginx
     volumes:

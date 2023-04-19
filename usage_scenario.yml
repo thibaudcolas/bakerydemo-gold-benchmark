@@ -12,43 +12,28 @@ services:
     # we need the DB fully booted. Therefore we wait here a little
     setup-commands:
       - sleep 1
+    pause-after-phase: '[BOOT]' #Phase names are always in []
 
   redis:
     networks:
       - bakery-bench-green-coding-network
+    pause-after-phase: '[BOOT]'
 
   app:
     environment:
       WAGTAILADMIN_BASE_URL: http://app:8005/admin/
-      SECURE_HSTS_SECONDS: 0
-      SECURE_SSL_REDIRECT: false
     image: bakerydemo-gold-benchmark-app
-    links:
-      - db:db
-      - redis:redis
-    ports:
-      - '8005:8005'
-    expose:
-      - '8005'
-    depends_on:
-      - db
-      - redis
-    build:
-      context: .
-      dockerfile: ./Dockerfile
     networks:
       - bakery-bench-green-coding-network
     setup-commands:
       - ./manage.py migrate
       - ./manage.py load_initial_data
-      - wget --recursive --spider --no-directories http://app:8005/ -o warmup.log
+    pause-after-phase: '[BOOT]'
 
   static_app:
-    image: nginx
     networks:
       - bakery-bench-green-coding-network
-    ports:
-      - '8001:80'
+    volumes: []
     setup-commands:
       - apt update
       - apt install wget
@@ -59,50 +44,26 @@ services:
   green-coding-puppeteer-container:
     image: greencoding/puppeteer-chrome
     setup-commands:
-      - cp /tmp/repo/benchmark/puppeteer/admin.js /var/www/admin.js
       - cp /tmp/repo/benchmark/puppeteer/blog-filtering.js /var/www/blog-filtering.js
-      - cp /tmp/repo/benchmark/puppeteer/contact-us.js /var/www/contact-us.js
       - cp /tmp/repo/benchmark/puppeteer/homepage-landing.js /var/www/homepage-landing.js
-      - cp /tmp/repo/benchmark/puppeteer/search.js /var/www/search.js
       - cp /tmp/repo/benchmark/puppeteer/package.json /var/www/package.json
 
     networks:
       - bakery-bench-green-coding-network
 
 flow:
-  - name: Check admin page
-    container: green-coding-puppeteer-container
-    commands:
-      - type: console
-        command: USAGE_SCENARIO_DOMAIN=static_app:80 node /var/www/admin.js
-        note: Starting admin Flow
-        read-notes-stdout: false
   - name: Check blog-filtering
     container: green-coding-puppeteer-container
     commands:
       - type: console
-        command: USAGE_SCENARIO_DOMAIN=static_app:80 node /var/www/blog-filtering.js
-        note: Starting admin Flow
-        read-notes-stdout: false
-  - name: Check contact-us
-    container: green-coding-puppeteer-container
-    commands:
-      - type: console
-        command: USAGE_SCENARIO_DOMAIN=static_app:80 node /var/www/contact-us.js
+        command: USAGE_SCENARIO_DOMAIN=http://static_app:80 node /var/www/blog-filtering.js
         note: Starting admin Flow
         read-notes-stdout: false
   - name: Check homepage landing
     container: green-coding-puppeteer-container
     commands:
       - type: console
-        command: USAGE_SCENARIO_DOMAIN=static_app:80 node /var/www/homepage-landing.js
-        note: Starting admin Flow
-        read-notes-stdout: false
-  - name: Check search
-    container: green-coding-puppeteer-container
-    commands:
-      - type: console
-        command: USAGE_SCENARIO_DOMAIN=static_app:80 node /var/www/search.js
+        command: USAGE_SCENARIO_DOMAIN=http://static_app:80 node /var/www/homepage-landing.js
         note: Starting admin Flow
         read-notes-stdout: false
 
