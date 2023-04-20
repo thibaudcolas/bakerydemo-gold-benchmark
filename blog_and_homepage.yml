@@ -1,8 +1,8 @@
 ---
 name: Bakerydemo GOLD benchmark
-author: Didi Hoffmann <didi@green-coding.org>
+author: Arne Tarara <arne@green-coding.berlin>
 version: 1
-description: Testing all routes of the exemplary Bakery demo Gold Benchmark
+description: Testing only blog and homepage of the dynamic exemplary Bakery demo Gold Benchmark
 
 compose-file: !include docker-compose.yml
 
@@ -34,11 +34,8 @@ services:
   green-coding-puppeteer-container:
     image: greencoding/puppeteer-chrome
     setup-commands:
-      - cp /tmp/repo/benchmark/puppeteer/admin.js /var/www/admin.js
       - cp /tmp/repo/benchmark/puppeteer/blog-filtering.js /var/www/blog-filtering.js
-      - cp /tmp/repo/benchmark/puppeteer/contact-us.js /var/www/contact-us.js
       - cp /tmp/repo/benchmark/puppeteer/homepage-landing.js /var/www/homepage-landing.js
-      - cp /tmp/repo/benchmark/puppeteer/search.js /var/www/search.js
       - cp /tmp/repo/benchmark/puppeteer/package.json /var/www/package.json
 
     networks:
@@ -49,23 +46,11 @@ flow:
     container: green-coding-puppeteer-container
     commands:
       - type: console
-        command:  USAGE_SCENARIO_DOMAIN=http://app:8005 node /var/www/admin.js
-        note: Starting admin Flow
-        read-notes-stdout: true
-      - type: console
         command:  USAGE_SCENARIO_DOMAIN=http://app:8005 node /var/www/blog-filtering.js
         note: Starting admin Flow
         read-notes-stdout: true
       - type: console
-        command:  USAGE_SCENARIO_DOMAIN=http://app:8005 node /var/www/contact-us.js
-        note: Starting admin Flow
-        read-notes-stdout: true
-      - type: console
         command:  USAGE_SCENARIO_DOMAIN=http://app:8005 node /var/www/homepage-landing.js
-        note: Starting admin Flow
-        read-notes-stdout: true
-      - type: console
-        command:  USAGE_SCENARIO_DOMAIN=http://app:8005 node /var/www/search.js
         note: Starting admin Flow
         read-notes-stdout: true
 
