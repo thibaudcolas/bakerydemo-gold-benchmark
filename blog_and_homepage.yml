@@ -2,7 +2,7 @@
 name: Bakerydemo GOLD benchmark Static
 author: Danilo Ješić <danilo@green-coding.berlin>
 version: 1
-description: Testing all routes of the exemplary Bakery demo Gold Benchmark
+description: Testing only blog and homepage of the static exemplary Bakery demo Gold Benchmark
 compose-file: !include docker-compose.yml
 
 services:
