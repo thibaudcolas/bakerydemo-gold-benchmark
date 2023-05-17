@@ -1,13 +1,18 @@
 import puppeteer from 'puppeteer';
+import microtime from 'microtime';
 
 (async () => {
-    const browser = await puppeteer.launch();
+    const browser = await puppeteer.launch({
+      headless: true,
+      executablePath: "/usr/bin/chromium-browser",
+      args: ['--no-sandbox', '--disable-setuid-sandbox'],
+    });
     const page = await browser.newPage();
     page.setDefaultTimeout(5000);
     await page.setViewport({"width":1280,"height":800});
 
-    await page.goto("http://localhost:8000/", { waitUntil: "networkidle0" });
-    console.log(await page.title());
+    await page.goto(process.env.USAGE_SCENARIO_DOMAIN, { waitUntil: "networkidle0" });
+    console.log(microtime.now(), await page.title());
 
     await page.waitForTimeout(3000);
     await page.evaluate(() => document.querySelector('footer').scrollIntoView());
@@ -17,7 +22,7 @@ import puppeteer from 'puppeteer';
       page.waitForNavigation({ waitUntil: 'networkidle0' }),
       page.click('[href="/breads"]')
     ])
-    console.log(await page.title());
+    console.log(microtime.now(), await page.title());
 
     await page.waitForTimeout(3000);
     await page.evaluate(() => document.querySelector('footer').scrollIntoView());
@@ -27,7 +32,7 @@ import puppeteer from 'puppeteer';
       page.waitForNavigation({ waitUntil: 'networkidle0' }),
       page.click('[href="/breads/bolani/"]')
     ])
-    console.log(await page.title());
+    console.log(microtime.now(), await page.title());
 
     await page.waitForTimeout(3000);
     await page.evaluate(() => document.querySelector('footer').scrollIntoView());

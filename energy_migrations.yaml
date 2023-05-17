@@ -1,0 +1,71 @@
+---
+name: Bakerydemo GOLD benchmark
+author: Didi Hoffmann <didi@green-coding.org>
+version: 1
+architecture: linux
+
+services:
+  db:
+    environment:
+      POSTGRES_DB: app_db
+      POSTGRES_USER: app_user
+      POSTGRES_PASSWORD: changeme
+    restart: always
+    image: postgres:14.1
+    expose:
+      - '5432'
+    networks:
+      - bakery-bench-green-coding-network
+    # we need the DB fully booted. Therefore we wait here a little
+    setup-commands:
+      - sleep 10
+
+  redis:
+    restart: always
+    image: redis:6.2
+    expose:
+      - '6379'
+    networks:
+      - bakery-bench-green-coding-network
+
+  app:
+    environment:
+      SECRET_KEY: changeme
+      DATABASE_URL: postgres://app_user:changeme@db/app_db
+      REDIS_URL: redis://redis
+      DJANGO_SETTINGS_MODULE: bakerydemo.settings.production
+      WAGTAILADMIN_BASE_URL: http://app:8005/admin/
+      SECURE_HSTS_SECONDS: 0
+      SECURE_SSL_REDIRECT: false
+    image: bakerydemo-gold-benchmark-app
+    links:
+      - db:db
+      - redis:redis
+    ports:
+      - '8005:8005'
+    depends_on:
+      - db
+      - redis
+    networks:
+      - bakery-bench-green-coding-network
+
+    networks:
+      - bakery-bench-green-coding-network
+
+flow:
+  - name: Check dynamic Website
+    container: app
+    commands:
+      - type: console
+        command: python3 manage.py migrate
+        note: Manage.py migrations
+        read-notes-stdout: false
+        ignore-errors: true
+      - type: console
+        command: python3 manage.py load_initial_data
+        note: Manage.py load_initial_data
+        read-notes-stdout: false
+        ignore-errors: true
+
+networks:
+  bakery-bench-green-coding-network:
