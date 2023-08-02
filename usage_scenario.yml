@@ -45,29 +45,69 @@ services:
       - bakery-bench-green-coding-network
 
 flow:
-  - name: Check dynamic Website
+  - name: Migrations
+    container: app
+    commands:
+      - type: console
+        command: python3 manage.py migrate
+        note: Manage.py migrations
+        read-notes-stdout: False
+        ignore-errors: True
+      - type: console
+  - name: Loading initial data
+    container: app
+    commands:
+      - type: console
+        command: python3 manage.py load_initial_data
+        note: Manage.py load_initial_data
+        read-notes-stdout: False
+        ignore-errors: True
+
+  - name: Admin Flow
     container: green-coding-puppeteer-container
     commands:
       - type: console
         command:  USAGE_SCENARIO_DOMAIN=http://app:8005 node /var/www/admin.js
-        note: Starting admin Flow
-        read-notes-stdout: true
+        shell: sh
+        log-stdout: True
+        read-sci-stdout: True
+        read-notes-stdout: True
+  - name: Blog filtering
+    container: green-coding-puppeteer-container
+    commands:
       - type: console
         command:  USAGE_SCENARIO_DOMAIN=http://app:8005 node /var/www/blog-filtering.js
-        note: Starting admin Flow
-        read-notes-stdout: true
+        shell: sh
+        log-stdout: True
+        read-sci-stdout: True
+        read-notes-stdout: True
+  - name: Contact Us
+    container: green-coding-puppeteer-container
+    commands:
       - type: console
         command:  USAGE_SCENARIO_DOMAIN=http://app:8005 node /var/www/contact-us.js
-        note: Starting admin Flow
-        read-notes-stdout: true
+        shell: sh
+        log-stdout: True
+        read-sci-stdout: True
+        read-notes-stdout: True
+  - name: Homepage Landing
+    container: green-coding-puppeteer-container
+    commands:
       - type: console
         command:  USAGE_SCENARIO_DOMAIN=http://app:8005 node /var/www/homepage-landing.js
-        note: Starting admin Flow
-        read-notes-stdout: true
+        shell: sh
+        log-stdout: True
+        read-sci-stdout: True
+        read-notes-stdout: True
+  - name: Search
+    container: green-coding-puppeteer-container
+    commands:
       - type: console
         command:  USAGE_SCENARIO_DOMAIN=http://app:8005 node /var/www/search.js
-        note: Starting admin Flow
-        read-notes-stdout: true
+        shell: sh
+        log-stdout: True
+        read-sci-stdout: True
+        read-notes-stdout: True
 
 networks:
   bakery-bench-green-coding-network:
