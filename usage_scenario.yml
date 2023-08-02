@@ -6,6 +6,9 @@ description: Testing all routes of the exemplary Bakery demo Gold Benchmark
 
 compose-file: !include docker-compose.yml
 
+sci:
+  R_d: init & page request
+
 services:
   db:
     networks:
@@ -53,7 +56,6 @@ flow:
         note: Manage.py migrations
         read-notes-stdout: False
         ignore-errors: True
-      - type: console
   - name: Loading initial data
     container: app
     commands:

@@ -13,6 +13,7 @@ import microtime from 'microtime';
 
     await page.goto(process.env.USAGE_SCENARIO_DOMAIN+"/contact-us/", { waitUntil: "networkidle0" });
     console.log(microtime.now(), await page.title());
+    console.log("GMT_SCI_R=1");
 
     await page.waitForTimeout(3000);
     await page.evaluate(() => document.querySelector('footer').scrollIntoView());
@@ -32,6 +33,8 @@ import microtime from 'microtime';
       page.waitForNavigation({ waitUntil: 'networkidle0' }),
       submit.press('Enter')
     ]);
+    console.log("GMT_SCI_R=1");
+
 
     await page.waitForTimeout(3000);
     await page.evaluate(() => document.querySelector('footer').scrollIntoView());

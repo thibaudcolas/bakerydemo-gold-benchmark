@@ -13,6 +13,7 @@ import microtime from 'microtime';
 
     await page.goto(process.env.USAGE_SCENARIO_DOMAIN+"/admin/login/", { waitUntil: "networkidle0" });
     console.log(microtime.now(), await page.title());
+    console.log("GMT_SCI_R=1");
 
     const id_username = await page.$('#id_username');
     await id_username.type('admin');
@@ -26,6 +27,7 @@ import microtime from 'microtime';
     ]);
 
     console.log(microtime.now(), await page.title());
+    console.log("GMT_SCI_R=1");
 
     await Promise.all([
       page.waitForNavigation({ waitUntil: 'networkidle0' }),
@@ -38,6 +40,7 @@ import microtime from 'microtime';
       page.click('[href="/admin/pages/61/"]')
     ])
     console.log(microtime.now(), await page.title());
+    console.log("GMT_SCI_R=1");
 
     await Promise.all([
       // Very heavy page that takes forever to load.
