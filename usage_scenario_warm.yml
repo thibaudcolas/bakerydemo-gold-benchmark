@@ -29,6 +29,10 @@ services:
       dockerfile: ./Dockerfile
     networks:
       - bakery-bench-green-coding-network
+    setup-commands:
+      - ./manage.py migrate
+      - ./manage.py load_initial_data
+      - wget --recursive --spider --no-directories http://app:8005/ -o warmup.log
 
   green-coding-puppeteer-container:
     image: greencoding/puppeteer-chrome
@@ -44,30 +48,6 @@ services:
       - bakery-bench-green-coding-network
 
 flow:
-  - name: Migrations
-    container: app
-    commands:
-      - type: console
-        command: python3 manage.py migrate
-        note: Manage.py migrations
-        read-notes-stdout: False
-        ignore-errors: True
-  - name: Loading initial data
-    container: app
-    commands:
-      - type: console
-        command: python3 manage.py load_initial_data
-        note: Manage.py load_initial_data
-        read-notes-stdout: False
-        ignore-errors: True
-  - name: Cache warming
-    container: app
-    commands:
-      - type: console
-        command: wget --recursive --spider --no-directories http://app:8005/ -o warmup.log
-        note: Warming the cache
-        read-notes-stdout: False
-        ignore-errors: True
   - name: Admin Flow
     container: green-coding-puppeteer-container
     commands:
