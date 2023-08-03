@@ -7,7 +7,7 @@ description: Testing all routes of the exemplary Bakery demo Gold Benchmark
 compose-file: !include docker-compose.yml
 
 sci:
-  R_d: init & page request
+  R_d: page request
 
 services:
   db:
