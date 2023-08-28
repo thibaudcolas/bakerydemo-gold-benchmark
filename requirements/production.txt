@@ -2,7 +2,7 @@
 
 elasticsearch==5.5.3
 # Additional dependencies for Heroku, AWS, and Google Cloud deployment
-psycopg2>=2.7,<3.0
+psycopg2==2.9.7
 boto3==1.9.189
 google-cloud-storage==1.20.0
 django-storages==1.13.1
