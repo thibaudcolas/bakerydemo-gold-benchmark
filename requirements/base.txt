@@ -1,4 +1,4 @@
-Django==4.1.12
+Django==4.1.13
 wagtail==4.2.4
 django-dotenv<=1.4.1
 wagtailfontawesome<=1.2.1
