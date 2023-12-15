@@ -1,0 +1,118 @@
+---
+name: Bakerydemo GOLD benchmark
+author: Didi Hoffmann <didi@green-coding.org>
+version: 1
+description: Testing all routes of the exemplary Bakery demo Gold Benchmark
+
+compose-file: !include docker-compose.yml
+
+sci:
+  R_d: page request
+
+services:
+  db:
+    networks:
+      - bakery-bench-green-coding-network
+    # we need the DB fully booted. Therefore we wait here a little
+    setup-commands:
+      - sleep 10
+
+  redis:
+    networks:
+      - bakery-bench-green-coding-network
+
+  app:
+    environment:
+      WAGTAILADMIN_BASE_URL: http://app:8005/admin/
+    build:
+      context: .
+      dockerfile: ./Dockerfile
+    networks:
+      - bakery-bench-green-coding-network
+
+  green-coding-puppeteer-container:
+    image: greencoding/puppeteer-chrome
+    setup-commands:
+      - cp /tmp/repo/benchmark/puppeteer/admin.js /var/www/admin.js
+      - cp /tmp/repo/benchmark/puppeteer/blog-filtering.js /var/www/blog-filtering.js
+      - cp /tmp/repo/benchmark/puppeteer/contact-us.js /var/www/contact-us.js
+      - cp /tmp/repo/benchmark/puppeteer/homepage-landing.js /var/www/homepage-landing.js
+      - cp /tmp/repo/benchmark/puppeteer/search.js /var/www/search.js
+      - cp /tmp/repo/benchmark/puppeteer/package.json /var/www/package.json
+
+    networks:
+      - bakery-bench-green-coding-network
+
+flow:
+  - name: Migrations
+    container: app
+    commands:
+      - type: console
+        command: python3 manage.py migrate
+        note: Manage.py migrations
+        read-notes-stdout: False
+        ignore-errors: True
+  - name: Loading initial data
+    container: app
+    commands:
+      - type: console
+        command: python3 manage.py load_initial_data
+        note: Manage.py load_initial_data
+        read-notes-stdout: False
+        ignore-errors: True
+  - name: Cache warming
+    container: app
+    commands:
+      - type: console
+        command: wget --recursive --spider --no-directories http://app:8005/ -o warmup.log
+        note: Warming the cache
+        read-notes-stdout: False
+        ignore-errors: True
+  - name: Admin Flow
+    container: green-coding-puppeteer-container
+    commands:
+      - type: console
+        command:  USAGE_SCENARIO_DOMAIN=http://app:8005 node /var/www/admin.js
+        shell: sh
+        log-stdout: True
+        read-sci-stdout: True
+        read-notes-stdout: True
+  - name: Blog filtering
+    container: green-coding-puppeteer-container
+    commands:
+      - type: console
+        command:  USAGE_SCENARIO_DOMAIN=http://app:8005 node /var/www/blog-filtering.js
+        shell: sh
+        log-stdout: True
+        read-sci-stdout: True
+        read-notes-stdout: True
+  - name: Contact Us
+    container: green-coding-puppeteer-container
+    commands:
+      - type: console
+        command:  USAGE_SCENARIO_DOMAIN=http://app:8005 node /var/www/contact-us.js
+        shell: sh
+        log-stdout: True
+        read-sci-stdout: True
+        read-notes-stdout: True
+  - name: Homepage Landing
+    container: green-coding-puppeteer-container
+    commands:
+      - type: console
+        command:  USAGE_SCENARIO_DOMAIN=http://app:8005 node /var/www/homepage-landing.js
+        shell: sh
+        log-stdout: True
+        read-sci-stdout: True
+        read-notes-stdout: True
+  - name: Search
+    container: green-coding-puppeteer-container
+    commands:
+      - type: console
+        command:  USAGE_SCENARIO_DOMAIN=http://app:8005 node /var/www/search.js
+        shell: sh
+        log-stdout: True
+        read-sci-stdout: True
+        read-notes-stdout: True
+
+networks:
+  bakery-bench-green-coding-network:

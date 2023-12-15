@@ -21,25 +21,17 @@ services:
       DATABASE_URL: postgres://app_user:changeme@db/app_db
       REDIS_URL: redis://redis
       DJANGO_SETTINGS_MODULE: bakerydemo.settings.production
-      WAGTAILADMIN_BASE_URL: http://localhost:8000/admin/
+      WAGTAILADMIN_BASE_URL: http://localhost:8005/admin/
       SECURE_HSTS_SECONDS: 0
       SECURE_SSL_REDIRECT: false
     build:
       context: .
       dockerfile: ./Dockerfile
-    volumes:
-      - ./bakerydemo:/app/bakerydemo
     links:
       - db:db
       - redis:redis
     ports:
-      - '8000:8000'
+      - '8005:8005'
     depends_on:
       - db
       - redis
-  static_app:
-    image: nginx
-    volumes:
-      - ./static-bakerydemo:/usr/share/nginx/html
-    ports:
-      - '8001:80'
