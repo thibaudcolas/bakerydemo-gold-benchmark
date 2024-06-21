@@ -32,7 +32,7 @@ ENV PATH=$VIRTUAL_ENV/bin:$PATH \
     PYTHONPATH=/app \
     PYTHONUNBUFFERED=1 \
     DJANGO_SETTINGS_MODULE=bakerydemo.settings.production \
-    PORT=8000 \
+    PORT=8005 \
     WEB_CONCURRENCY=3 \
     GUNICORN_CMD_ARGS="-c gunicorn-conf.py --max-requests 1200 --max-requests-jitter 50 --access-logfile - --timeout 25 --reload"
 
@@ -42,7 +42,7 @@ ENV BUILD_ENV=${BUILD_ENV}
 
 # Port exposed by this container. Should default to the port used by your WSGI
 # server (Gunicorn). Heroku will ignore this.
-EXPOSE 8000
+EXPOSE 8005
 
 # Don't use the root user as it's an anti-pattern and Heroku does not run
 # containers as root either.

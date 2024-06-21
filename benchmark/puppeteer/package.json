@@ -12,6 +12,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "microtime": "^3.1.1",
     "puppeteer": "^19.4.0"
   }
 }
