@@ -24,3 +24,4 @@ __pycache__
 /bakerydemo/cache
 !.gitignore
 bakerydemo/collect_static
+/static-bakerydemo
